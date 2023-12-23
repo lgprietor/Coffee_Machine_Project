@@ -23,6 +23,7 @@ def report():
             print(f"{i.title()} = {resources[i]} g")
     print(f"Money: ${sum(money)}")
 
+
 # TODO: 2 - Create a function that validates an input for coffee machine type. According to the
 #  analysis, this validation must be done using a combination of while + if + else because is a string type
 #  The user here has the option of select a type of coffee or he can select off function or report function:
@@ -56,6 +57,40 @@ user_coffee_selected = ask_usr_selection()
 
 print(user_coffee_selected)
 
-# TODO
 
-print("Testing git :)")
+# TODO: 5 - Create a function that check resources sufficiency?
+
+def check_resources(user_coffee_selected):
+    # Check if there's enough resources to produce a coffee
+    enough_resources = []
+    missing_resources = []
+    quantity_missing = []
+
+    for ingredient in MENU[user_coffee_selected]["ingredients"]:
+        if resources[ingredient] >= MENU[user_coffee_selected]["ingredients"][ingredient]:
+            enough_resources.append(ingredient)
+        else:
+            ingredients_difference = abs(resources[ingredient] - MENU[user_coffee_selected]["ingredients"][ingredient])
+            missing_resources.append(ingredient)
+            quantity_missing.append(ingredients_difference)
+
+    if len(missing_resources) == 0:
+        resources_checked = True
+    else:
+        print("Sorry, there is not enough ingredients to prepare the coffee selected")
+        resources_checked = False
+        for i in range(0, len(missing_resources)):
+            if i == "water" or "milk":
+                measuring_unit = "mL"
+            else:
+                measuring_unit = "g"
+
+            print(f"Please refill the machine with {quantity_missing[i]} {measuring_unit} of {missing_resources[i]}")
+
+    return resources_checked
+
+# TODO: 6 - Create a function to process the coins
+
+check_resources(user_coffee_selected)
+
+# if check_resources(user_coffee_selected) == True:
