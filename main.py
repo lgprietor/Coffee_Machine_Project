@@ -58,3 +58,4 @@ print(user_coffee_selected)
 
 # TODO
 
+print("Testing git :)")
