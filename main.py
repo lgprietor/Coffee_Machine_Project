@@ -55,6 +55,10 @@ def ask_usr_selection():
 
 user_coffee_selected = ask_usr_selection()
 
+coffee_cost = MENU[user_coffee_selected]["cost"]
+
+print(f"The {user_coffee_selected} costs $USD {coffee_cost}")
+
 
 # print(user_coffee_selected)
 
@@ -204,6 +208,31 @@ def check_coins_function():
 
         value_saver(coin_selected_translated, coins_paid, calculated_payment)
 
+        # TODO: 14 - It's necessary to create a function that ask user if he wants to continue paying
+
+        def continue_payment():
+
+            continue_payment_checked = False
+
+            while not continue_payment_checked:
+
+                user_continue_payment = input("Do you want to continue with the payment? "
+                                              "Type yes or no \n").lower()
+
+                if user_continue_payment == "yes" or user_continue_payment == "y":
+
+                    continue_payment_checked = True
+
+                elif user_continue_payment == "no" or user_continue_payment == "n":
+
+                    continue_payment_checked = True
+
+                else:
+
+                    print("Please write a valid option")
+
+            return user_continue_payment
+
         # TODO: 13 - Create a function that checks the payment completion
 
         def payment_completion(user_coffee_selected, calculated_payment):
@@ -214,44 +243,46 @@ def check_coins_function():
 
             while not payment_checked:
 
-                if difference > 0:
+                if difference < 0:
+
+                    change = abs(difference)
+
+                    print(f"It was a pleasure to serve you, there you go, you have your "
+                          f"{user_coffee_selected} 🍵🍵🍵🍵 and your {change} change")
+
+                    payment_checked = True
+                    transaction_complete = True
+
+                elif difference == 0:
+
+                    print(f"It was a pleasure to serve you, here you go, you have your "
+                          f"{user_coffee_selected} 🍵🍵🍵🍵")
+
+                    payment_checked = True
+                    transaction_complete = True
+
+                while difference > 0:
 
                     print(f"You current paid is $ USD {calculated_payment}. Please insert $ USD {difference} to "
                           f"get you {user_coffee_selected}")
 
-                    # TODO: 14 - It's necessary to create a function that ask user if he wants to continue paying
+                    user_continue_payment = continue_payment()
 
-                    def continue_payment():
+                    if user_continue_payment == "no":
 
-                        continue_payment_checked = False
+                        print(f"Your funds {calculated_payment} have been refunded")
+                        return
 
-                        while not continue_payment_checked:
+                        transaction_complete = False
 
-                            user_continue_payment = input("Do you want to continue with the payment? "
-                                                          "Type yes or no \n").lower()
-
-                            if user_continue_payment == "yes" or user_continue_payment == "y":
-
-                                continue_payment_checked = True
-
-                            elif user_continue_payment == "no" or user_continue_payment == "n":
-
-                                continue_payment_checked = True
-
-                            else:
-
-                                print("Please write a valid option")
-
-                        return user_continue_payment
-
-                    if continue_payment() == "yes":
+                    elif user_continue_payment == "yes":
 
                         coin_selected = coin_selection_validated(user_coffee_selected)
                         coin_selected_translated = coins_type_translation(coin_selected)
                         coins_paid = coins_used(coin_selected_translated)
                         calculated_payment = (current_paid_value(coin_selected_translated, coins_paid))
 
-                        calculated_payment2 = calculated_payment + sum(values_paid_dictionary["Total_paid"])
+                        calculated_payment2 = (calculated_payment + values_paid_dictionary["Total_paid"][-1])
 
                         value_saver(coin_selected_translated, coins_paid, calculated_payment2)
 
@@ -259,48 +290,13 @@ def check_coins_function():
 
                         calculated_payment = calculated_payment2
 
-                        if difference2 == 0:
-                            print(f"It was a pleasure to serve you, there you go, you have your "
-                                  f"{user_coffee_selected}")
+                        difference = difference2
 
-                        if difference2 < 0:
+            return transaction_complete
 
-                            change = difference2
+        transaction_status = payment_completion(user_coffee_selected, calculated_payment)
 
-                            print(f"It was a pleasure to serve you, there you go, you have your "
-                                  f"{}user_coffee_selected} and your {change}")
-
-                    if continue_payment() == "no":
-
-                        return
-
-
-
-
-
-
-
-
-
-        payment_completion(user_coffee_selected, calculated_payment)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        print(transaction_status)
 
     else:
         return
