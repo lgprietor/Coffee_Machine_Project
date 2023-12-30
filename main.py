@@ -19,7 +19,8 @@ values_paid_dictionary = {
             "penny": [],
             "Money": [],
             "Change": [],
-            "Total_money": []
+            "Total_money": [],
+            "Refunds": [],
 }
 
 # TODO: 7 - It's necessary to create a dictionary to display on screen for user the coins options (Global)
@@ -38,23 +39,25 @@ def report():
     print("The machine right now has the following resources: \n")
     for i in resources:
         if i == "water" or i == "milk":
-            print(f"{i.title()} = {resources[i]} mL")
+            print(f"{i.title()}: {resources[i]} mL")
         else:
-            print(f"{i.title()} = {resources[i]} g")
+            print(f"{i.title()}: {resources[i]} g")
 
     for i in values_paid_dictionary:
         if i == "quarter" or i == "dime" or i == "nickel" or i == "penny":
-            print(f"{i} coins quantity {sum(values_paid_dictionary[i])}")
+            #print(f"{i} coins quantity {sum(values_paid_dictionary[i])}")
             money_calculated = (coins[i])*sum(values_paid_dictionary[i])
             values_paid_dictionary["Total_money"].append(money_calculated)
 
     #Print total
 
-    Final_total = sum(values_paid_dictionary["Total_money"]) - sum(values_paid_dictionary["Change"])
-    Final_change = sum(values_paid_dictionary["Change"])
+    Final_total = sum(values_paid_dictionary["Total_money"]) - sum(values_paid_dictionary["Change"]) \
+                  - sum(values_paid_dictionary["Refunds"])
+    # Final_change = sum(values_paid_dictionary["Change"])
 
-    print(f"The change returned to user is: {Final_change}")
-    print(f"Total money in machine is: {Final_total}")
+    #print(f"The change returned to user is: {Final_change}")
+    print(f"Money: $USD {Final_total}")
+    print(values_paid_dictionary)
 
 
 # TODO: 2 - Create a function that validates an input for coffee machine type. According to the
@@ -279,6 +282,7 @@ def check_coins_function():
                     if user_continue_payment == "no":
 
                         print(f"Your funds $USD {calculated_payment} have been refunded")
+                        values_paid_dictionary["Refunds"].append(calculated_payment)
                         return
 
                     elif user_continue_payment == "yes":
@@ -331,7 +335,9 @@ if user_coffee_selected == "espresso" or user_coffee_selected == "latte" or user
     resources_status = check_resources(user_coffee_selected)
 
     check_coins_function()
-    #report()
+
+    report()
 
 elif user_coffee_selected == "report":
     report()
+
