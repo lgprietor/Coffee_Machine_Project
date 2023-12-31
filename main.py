@@ -135,88 +135,105 @@ def check_coins_function(resources_status):
         for i in coins:
             print(f"{i.title()} coin $USD {coins[i]}")
 
-        # TODO: 8 - Create a function that validates an input for coin type
+        # # TODO: 8 - Create a function that validates an input for coin type
+        #
+        # def coin_selection_validated(user_coffee_selected):
+        #
+        #     coin_selection_checked = False
+        #
+        #     while not coin_selection_checked:
+        #
+        #         coin_selection = input(f"\n What coin do you want to use to pay your {user_coffee_selected}? Please "
+        #                                f"select A for quarters,B for dimes, C for nickels, and D for pennies \n")
+        #
+        #         if coin_selection == "A" or coin_selection == "B" or coin_selection == "C" or coin_selection == "D":
+        #             coin_selection_checked = True
+        #         else:
+        #             print("Please write a valid option")
+        #
+        #     return coin_selection
+        #
+        # coin_selected = coin_selection_validated(user_coffee_selected)
+        #
+        # # TODO: 9 - Create a function that translate the user option in coin selection validated:
+        #
+        # def coins_type_translation(coin_selected):
+        #
+        #     if coin_selected == "A":
+        #         coin_translated = "quarter"
+        #         return coin_translated
+        #     elif coin_selected == "B":
+        #         coin_translated = "dime"
+        #         return coin_translated
+        #     elif coin_selected == "C":
+        #         coin_translated = "nickel"
+        #         return coin_translated
+        #     elif coin_selected == "D":
+        #         coin_translated = "penny"
+        #         return coin_translated
 
-        def coin_selection_validated(user_coffee_selected):
+        # # TODO: 10 - Create a function that validates the amount of coins received from user:
+        #
+        # coin_selected_translated = coins_type_translation(coin_selected)
 
-            coin_selection_checked = False
-
-            while not coin_selection_checked:
-
-                coin_selection = input(f"\n What coin do you want to use to pay your {user_coffee_selected}? Please "
-                                       f"select A for quarters,B for dimes, C for nickels, and D for pennies \n")
-
-                if coin_selection == "A" or coin_selection == "B" or coin_selection == "C" or coin_selection == "D":
-                    coin_selection_checked = True
-                else:
-                    print("Please write a valid option")
-
-            return coin_selection
-
-        coin_selected = coin_selection_validated(user_coffee_selected)
-
-        # TODO: 9 - Create a function that translate the user option in coin selection validated:
-
-        def coins_type_translation(coin_selected):
-
-            if coin_selected == "A":
-                coin_translated = "quarter"
-                return coin_translated
-            elif coin_selected == "B":
-                coin_translated = "dime"
-                return coin_translated
-            elif coin_selected == "C":
-                coin_translated = "nickel"
-                return coin_translated
-            elif coin_selected == "D":
-                coin_translated = "penny"
-                return coin_translated
-
-        # TODO: 10 - Create a function that validates the amount of coins received from user:
-
-        coin_selected_translated = coins_type_translation(coin_selected)
-
-        def coins_used(coin_selected_translated):
+        def coins_used():
 
             # TODO: 11 - It's necessary to check the input from user. Due to the number of coins is an integer
             #  variable, it's useful to validate the input using a combination of while + try + except + else:'
 
             payment_checked = False
 
+            coins = {
+                "quarter": 0.25,
+                "dime": 0.10,
+                "nickel": 0.05,
+                "penny": 0.01,
+            }
+
             while not payment_checked:
+
                 try:
-                    if coin_selected_translated == "penny":
-                        coin_selected_translated = "pennie"
-                    number_of_coins = int(input(f"please insert the number of {coin_selected_translated}s: \n"))
+                    for i in coins:
+                        if i == "penny":
+                            plural_article = "pennie"
+                        else:
+                            plural_article = i
+                        values_paid_dictionary[i] = int(input(f"please insert the number of {plural_article}s: \n"))
                 except:
                     print("Please write a number")
                 else:
                     payment_checked = True
 
-            return number_of_coins
+            print(values_paid_dictionary)
 
-        coins_paid = coins_used(coin_selected_translated)
+        coins_used()
 
         # TODO: 12 - Create a function to calculate the current paid value:
 
-        def current_paid_value(coin_selected_translated, coins_paid):
+        def current_paid_value():
 
-            calculated_paid_value = coins[coin_selected_translated] * coins_paid
+            calculated_payment = 0
 
-            return calculated_paid_value
+            for i in coins:
 
-        calculated_payment = (current_paid_value(coin_selected_translated, coins_paid))
+                calculated_paid_value = coins[i] * values_paid_dictionary[i]
+                print(calculated_paid_value)
+
+                calculated_payment += calculated_paid_value
+
+            print(calculated_payment)
+            return calculated_payment
+
+        calculated_payment = current_paid_value()
 
         # TODO: 15 - It's necessary to create a function that saves the quantities of type of coin, and quantity
         #  calculated to facilitate the calculation in each payment iteration:
 
-        def value_saver(coin_selected_translated, coins_paid, calculated_payment):
-
-            values_paid_dictionary[coin_selected_translated].append(coins_paid)
+        def value_saver(calculated_payment):
 
             values_paid_dictionary["Money"].append(calculated_payment)
 
-        value_saver(coin_selected_translated, coins_paid, calculated_payment)
+        value_saver(calculated_payment)
 
         # TODO: 14 - It's necessary to create a function that ask user if he wants to continue paying
 
@@ -287,11 +304,10 @@ def check_coins_function(resources_status):
 
                     elif user_continue_payment == "yes":
 
-                        coin_selected = coin_selection_validated(user_coffee_selected)
-                        coin_selected_translated = coins_type_translation(coin_selected)
-                        coins_paid = coins_used(coin_selected_translated)
-                        calculated_payment = (current_paid_value(coin_selected_translated, coins_paid))
-
+                        # coin_selected = coin_selection_validated(user_coffee_selected)
+                        # coin_selected_translated = coins_type_translation(coin_selected)
+                        coins_used()
+                        calculated_payment = current_paid_value()
                         calculated_payment2 = (calculated_payment + values_paid_dictionary["Money"][-1])
 
                         value_saver(coin_selected_translated, coins_paid, calculated_payment2)
