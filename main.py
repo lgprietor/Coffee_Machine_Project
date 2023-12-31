@@ -341,6 +341,7 @@ if user_coffee_selected == "espresso" or user_coffee_selected == "latte" or user
 
 elif user_coffee_selected == "report":
     report()
+    new_coffee = True
 
 elif user_coffee_selected == "off":
     new_coffee = False
@@ -368,9 +369,13 @@ def recursion_coffee():
 
     elif user_coffee_selected == "report":
         report()
+        new_coffee = True
+        return new_coffee
 
     elif user_coffee_selected == "off":
-        return not new_coffee
+
+        new_coffee = False
+        return new_coffee
 
 while new_coffee:
     recursion_coffee()
