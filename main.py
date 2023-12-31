@@ -214,7 +214,6 @@ def check_coins_function(resources_status):
 
             calculated_payment = 0
 
-
             for i in coins:
 
                 calculated_paid_value = coins[i] * values_paid_dictionary[i]
