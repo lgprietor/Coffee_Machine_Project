@@ -57,7 +57,7 @@ def report():
 
     #print(f"The change returned to user is: {Final_change}")
     print(f"Money: $USD {Final_total}")
-    print(values_paid_dictionary)
+    # print(values_paid_dictionary)
 
 
 # TODO: 2 - Create a function that validates an input for coffee machine type. According to the
@@ -78,7 +78,7 @@ def ask_usr_selection():
 
         elif user_selection == "off":
             print("Bye")
-            return
+            return user_selection
 
         elif user_selection == "report":
             return user_selection
@@ -127,7 +127,7 @@ def check_resources(user_coffee_selected):
 
 # TODO: 6 - Create a function to process the coins. This function has more functions inside
 
-def check_coins_function():
+def check_coins_function(resources_status):
     if resources_status:
 
         print("This machine receives this type of coins: \n")
@@ -323,9 +323,10 @@ def check_coins_function():
 
         # print(values_paid_dictionary)
 
+        return status_transaction
+
     else:
         return
-
 
 if user_coffee_selected == "espresso" or user_coffee_selected == "latte" or user_coffee_selected == "cappuccino":
     coffee_cost = MENU[user_coffee_selected]["cost"]
@@ -334,10 +335,45 @@ if user_coffee_selected == "espresso" or user_coffee_selected == "latte" or user
 
     resources_status = check_resources(user_coffee_selected)
 
-    check_coins_function()
-
-    report()
+    new_coffee = check_coins_function(resources_status)
 
 elif user_coffee_selected == "report":
     report()
+
+elif user_coffee_selected == "off":
+    new_coffee = False
+
+def recursion_coffee():
+
+    print(logo)
+
+    global user_coffee_selected
+
+    user_coffee_selected = ask_usr_selection()
+
+    if user_coffee_selected == "espresso" or user_coffee_selected == "latte" or user_coffee_selected == "cappuccino":
+
+        coffee_cost = MENU[user_coffee_selected]["cost"]
+
+        print(f"The {user_coffee_selected} costs $USD {coffee_cost}")
+
+        resources_status = check_resources(user_coffee_selected)
+
+        new_coffee = check_coins_function(resources_status)
+
+        return new_coffee
+
+    elif user_coffee_selected == "report":
+        report()
+
+    elif user_coffee_selected == "off":
+        return not new_coffee
+
+while new_coffee:
+    recursion_coffee()
+
+
+
+
+
 
