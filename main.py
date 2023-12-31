@@ -328,6 +328,8 @@ def check_coins_function(resources_status):
     else:
         return
 
+# TODO: 17 - It's necessary to call the function to get a coffee by the first time
+
 if user_coffee_selected == "espresso" or user_coffee_selected == "latte" or user_coffee_selected == "cappuccino":
     coffee_cost = MENU[user_coffee_selected]["cost"]
 
@@ -343,6 +345,7 @@ elif user_coffee_selected == "report":
 elif user_coffee_selected == "off":
     new_coffee = False
 
+# TODO: 18 - Create a recursion function to ask user for another coffee:
 def recursion_coffee():
 
     print(logo)
