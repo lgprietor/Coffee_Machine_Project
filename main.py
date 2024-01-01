@@ -375,17 +375,22 @@ def recursion_coffee():
         return new_coffee
 
     elif user_coffee_selected == "report":
+
         report()
+
         new_coffee = True
+
         return new_coffee
+
 
     elif user_coffee_selected == "off":
 
         new_coffee = False
+
         return new_coffee
 
 while new_coffee:
-    recursion_coffee()
+    new_coffee = recursion_coffee()
 
 
 
