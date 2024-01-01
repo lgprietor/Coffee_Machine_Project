@@ -55,7 +55,7 @@ def report():
 
     for j in range(-4, 0):
         Final_total += values_paid_dictionary["Total_money"][j]
-        print(Final_total)
+        # print(Final_total)
 
     Final_total -= sum(values_paid_dictionary["Change"]) - sum(values_paid_dictionary["Refunds"])
 
@@ -194,21 +194,71 @@ def check_coins_function(resources_status):
                 "penny": 0.01,
             }
 
-            while not payment_checked:
+            # Validate quarter quantity:
+            def quarters_paid():
 
-                try:
-                    for i in coins:
-                        if i == "penny":
-                            plural_article = "pennie"
-                        else:
-                            plural_article = i
-                        values_paid_dictionary[i] = int(input(f"please insert the number of {plural_article}s: \n"))
-                except:
-                    print("Please write a number")
-                else:
-                    payment_checked = True
+                quarter_payment_checked = False
 
-            print(values_paid_dictionary)
+                while not quarter_payment_checked:
+                    try:
+                        number_of_quarters = int(input(f"please insert the number of quarters: \n"))
+                    except:
+                        print("Please write a number")
+                    else:
+                        values_paid_dictionary["quarter"].append(number_of_quarters)
+                        quarter_payment_checked = True
+
+                return number_of_quarters
+
+            def dimes_paid():
+
+                dime_payment_checked = False
+
+                while not dime_payment_checked:
+                    try:
+                        number_of_dimes = int(input(f"please insert the number of dimes: \n"))
+                    except:
+                        print("Please write a number")
+                    else:
+                        values_paid_dictionary["dime"].append(number_of_dimes)
+                        dime_payment_checked = True
+
+                return number_of_dimes
+
+            def nickels_paid():
+
+                nickels_payment_checked = False
+
+                while not nickels_payment_checked:
+                    try:
+                        number_of_nickels = int(input(f"please insert the number of nickels: \n"))
+                    except:
+                        print("Please write a number")
+                    else:
+                        values_paid_dictionary["nickel"].append(number_of_nickels)
+                        nickels_payment_checked = True
+
+                return number_of_nickels
+
+            def pennies_paid():
+
+                pennies_payment_checked = False
+
+                while not pennies_payment_checked:
+                    try:
+                        number_of_pennies = int(input(f"please insert the number of pennies: \n"))
+                    except:
+                        print("Please write a number")
+                    else:
+                        values_paid_dictionary["penny"].append(number_of_pennies)
+                        pennies_payment_checked = True
+
+                return number_of_pennies
+
+            quarters_paid()
+            dimes_paid()
+            nickels_paid()
+            pennies_paid()
 
         coins_used()
 
@@ -220,12 +270,12 @@ def check_coins_function(resources_status):
 
             for i in coins:
 
-                calculated_paid_value = coins[i] * values_paid_dictionary[i]
-                print(calculated_paid_value)
+                calculated_paid_value = coins[i] * values_paid_dictionary[i][-1]
+                # print("{:.2f}".format(calculated_paid_value))
 
                 calculated_payment += calculated_paid_value
 
-            print(calculated_payment)
+            # print("{:.2f}".format(calculated_payment))
             return calculated_payment
 
         calculated_payment = current_paid_value()
@@ -314,7 +364,7 @@ def check_coins_function(resources_status):
                         calculated_payment = current_paid_value()
                         calculated_payment2 = (calculated_payment + values_paid_dictionary["Money"][-1])
 
-                        value_saver(coin_selected_translated, coins_paid, calculated_payment2)
+                        value_saver(calculated_payment2)
 
                         difference2 = (MENU[user_coffee_selected]["cost"] - calculated_payment2)
 
@@ -361,6 +411,7 @@ if user_coffee_selected == "espresso" or user_coffee_selected == "latte" or user
 
 elif user_coffee_selected == "report":
     report()
+    new_coffee = True
 
 elif user_coffee_selected == "off":
     new_coffee = False
@@ -388,12 +439,15 @@ def recursion_coffee():
 
     elif user_coffee_selected == "report":
         report()
+        new_coffee = True
+        return new_coffee
 
     elif user_coffee_selected == "off":
-        return not new_coffee
+        new_coffee = False
+        return new_coffee
 
 while new_coffee:
-    recursion_coffee()
+    new_coffee = recursion_coffee()
 
 
 
