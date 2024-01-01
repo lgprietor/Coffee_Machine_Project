@@ -322,7 +322,6 @@ def check_coins_function(resources_status):
                 for i in MENU[user_coffee_selected]["ingredients"]:
                     resources[i] = resources[i] - MENU[user_coffee_selected]["ingredients"][i]
                     new_coffee = True
-                    return new_coffee
 
             else:
                 new_coffee = True
