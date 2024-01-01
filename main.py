@@ -51,9 +51,13 @@ def report():
 
     #Print total
 
-    Final_total = sum(values_paid_dictionary["Total_money"]) - sum(values_paid_dictionary["Change"]) \
-                  - sum(values_paid_dictionary["Refunds"])
-    # Final_change = sum(values_paid_dictionary["Change"])
+    Final_total = 0
+
+    for j in range(-4, 0):
+        Final_total += values_paid_dictionary["Total_money"][j]
+        print(Final_total)
+
+    Final_total -= sum(values_paid_dictionary["Change"]) - sum(values_paid_dictionary["Refunds"])
 
     #print(f"The change returned to user is: {Final_change}")
     print(f"Money: $USD {Final_total}")
