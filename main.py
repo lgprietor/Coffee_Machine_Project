@@ -290,7 +290,8 @@ def check_coins_function(resources_status):
 
                         print(f"Your funds $USD {calculated_payment} have been refunded")
                         values_paid_dictionary["Refunds"].append(calculated_payment)
-                        return
+                        new_coffee = True
+                        return new_coffee
 
                     elif user_continue_payment == "yes":
 
