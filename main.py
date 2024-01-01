@@ -354,8 +354,8 @@ def check_coins_function(resources_status):
 
                         print(f"Your funds $USD {calculated_payment} have been refunded")
                         values_paid_dictionary["Refunds"].append(calculated_payment)
-                        new_coffee = True
-                        return new_coffee
+                        transaction_checked = False
+                        return transaction_checked
 
                     elif user_continue_payment == "yes":
 
@@ -384,17 +384,19 @@ def check_coins_function(resources_status):
 
                 for i in MENU[user_coffee_selected]["ingredients"]:
                     resources[i] = resources[i] - MENU[user_coffee_selected]["ingredients"][i]
+                    new_coffee = True
 
             else:
-                return
+                new_coffee = True
 
+            return new_coffee
             # print(resources)
 
-        quantities_subtraction(status_transaction, user_coffee_selected)
+        new_coffee = quantities_subtraction(status_transaction, user_coffee_selected)
 
         # print(values_paid_dictionary)
 
-        return status_transaction
+        return new_coffee
 
     else:
         return
