@@ -57,10 +57,10 @@ def report():
         Final_total += values_paid_dictionary["Total_money"][j]
         # print(Final_total)
 
-    Final_total -= sum(values_paid_dictionary["Change"]) - sum(values_paid_dictionary["Refunds"])
+    Final_total = Final_total - sum(values_paid_dictionary["Change"]) - sum(values_paid_dictionary["Refunds"])
     # Final_change = sum(values_paid_dictionary["Change"])
 
-    # print(values_paid_dictionary)
+    print(values_paid_dictionary)
 
     #print(f"The change returned to user is: {Final_change}")
     print(f"Money: $USD {Final_total}")
@@ -290,6 +290,8 @@ def check_coins_function(resources_status):
 
                         print(f"Your funds $USD {calculated_payment} have been refunded")
                         values_paid_dictionary["Refunds"].append(calculated_payment)
+                        difference = 1
+                        transaction_checked = False
                         new_coffee = True
                         return new_coffee
 
